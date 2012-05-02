@@ -1,0 +1,48 @@
+[system]
+directory = ROOT
+
+[db]
+
+default.adapter     = "mysql"
+default.dsn.dbname  = "solarbbs"
+default.dsn.charset = "utf8"
+
+master.m0.dsn.host  = "localhost"
+master.m0.dsn.port  = "3306"
+master.m0.username  = "write"
+master.m0.password  = "123456"
+
+slave.s0.dsn.host   = "localhost"
+slave.s0.dsn.port   = "3306"
+slave.s0.username   = "read"
+slave.s0.password   = "123456"
+
+slave.s1.dsn.host   = "localhost"
+slave.s1.dsn.port   = "3306"
+slave.s1.username   = "onlyread"
+slave.s1.password   = "123456"
+
+[dbtemp]
+
+default.adapter     = "mysql"
+default.dsn.dbname  = "wordpress"
+default.dsn.charset = "utf8"
+
+master.m0.dsn.host  = "127.0.0.1"
+master.m0.dsn.port  = "3307"
+master.m0.username  = "write"
+master.m0.password  = "123456"
+
+slave.s0.dsn.host   = "127.0.0.1"
+slave.s0.dsn.port   = "3307"
+slave.s0.username   = "read"
+slave.s0.password   = "123456"
+
+slave.s1.dsn.host   = "127.0.0.1"
+slave.s1.dsn.port   = "3307"
+slave.s1.username   = "onlyread"
+slave.s1.password   = "123456"
+
+[model]
+directory                = ROOT "/Framework/Web/Model";
+validate            = yes
