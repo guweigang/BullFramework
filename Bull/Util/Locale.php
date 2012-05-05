@@ -38,7 +38,7 @@ class Bull_Util_Locale
     {
         $class = empty($class) ?  __CLASS__ : $class;
         $stack = array();
-        $stack[] = 'Bull_Locale';
+        $stack[] = 'Bull_Util';
         
         if ($class != __CLASS__) {
             array_unshift($stack, $class);

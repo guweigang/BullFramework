@@ -16,8 +16,11 @@ class Bootstrap
     
     public function exec()
     {
-        set_include_path(get_include_path().PATH_SEPARATOR.$this->system);
-        require "Bull/Util/splClassLoader.php";
+        set_include_path(get_include_path(). PATH_SEPARATOR . $this->system);
+        
+        require_once("Bull" . DIRECTORY_SEPARATOR . "Util" .
+                     DIRECTORY_SEPARATOR . "splClassLoader.php");
+        
         $classloader = new splClassLoader(null, $this->system);
         $classloader->register();
     }
@@ -33,10 +36,10 @@ class Bootstrap
         $bootstrap = $this;
         Bull_Di_Container::set('config', function () use ($bootstrap) {
                 $config=new Bull_Config_Ini();
-                $config->load($bootstrap->system . "/Config/". $bootstrap->mode . ".ini");
+                $config->load($bootstrap->system . DIRECTORY_SEPARATOR
+                              . "Config". DIRECTORY_SEPARATOR . $bootstrap->mode . ".ini");
                 return $config;
             });
-
     }
 
     public function execCli()
@@ -50,7 +53,8 @@ class Bootstrap
         $bootstrap = $this;
         Bull_Di_Container::set('config', function () use ($bootstrap) {
                 $config=new Bull_Config_Ini();
-                $config->load($bootstrap->system . "/Config/". $bootstrap->mode . ".ini");
+                $config->load($bootstrap->system . DIRECTORY_SEPARATOR
+                              . "Config". DIRECTORY_SEPARATOR . $bootstrap->mode . ".ini");
                 return $config;
             });
     }

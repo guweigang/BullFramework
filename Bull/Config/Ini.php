@@ -1,5 +1,4 @@
 <?php
-
 class Bull_Config_Ini extends Bull_Config_Abstract
 {
     /**
@@ -42,7 +41,8 @@ class Bull_Config_Ini extends Bull_Config_Abstract
                 if (isset($this->configs[$section_name])) {
                     return $this->configs[$section_name];
                 } else {
-                    throw new Bull_Config_Exception('Section ' . $section_name . ' not found in the ini file');
+                    throw new Bull_Config_Exception('Section ' . $section_name .
+                                                    ' not found in the ini file ' . $realfile);
                 }
             }
         }
@@ -73,7 +73,8 @@ class Bull_Config_Ini extends Bull_Config_Abstract
 
             // check if the extended section exists
             if (!isset($this->configs[$ext_source])) {
-                throw new Exception('Unable to extend section ' . $ext_source . ', section not found');
+                throw new Bull_Config_Exception('Unable to extend section ' .
+                                                $ext_source . ', section not found');
             }
 
             // process section contents
@@ -162,7 +163,6 @@ class Bull_Config_Ini extends Bull_Config_Abstract
             // one of values is not an array
             $a = $b;
         }
-
         return $a;
     }
 }

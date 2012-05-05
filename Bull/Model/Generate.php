@@ -60,12 +60,12 @@ class Bull_Model_Generate
         $cols_code = preg_replace('/(\'\w+\' =>\s*)/', $prefix11. "$1", $cols_code);
         $cols_code = preg_replace('/(\'\w+\' => \S+)/', " $1", $cols_code);
 
-        $root_dir   = Bull_Di_Container::get('config')->system->directory. "/";
+        $root_dir   = Bull_Di_Container::get('config')->system->directory . DIRECTORY_SEPARATOR;
         $model_dir  = Bull_Di_Container::get('config')->model->directory;
         
-        $class_prefix = str_replace("/", "_", substr($model_dir, strlen($root_dir)));
+        $class_prefix = str_replace(DIRECTORY_SEPARATOR, "_", substr($model_dir, strlen($root_dir)));
         
-        $dir = $model_dir ."/". $model_prefix;
+        $dir = $model_dir . DIRECTORY_SEPARATOR . $model_prefix;
         
         $code = <<<EOT
 <?php
@@ -91,7 +91,7 @@ EOT;
                 error_log($e->getMessage());
             }
         }
-        $fhander = fopen($dir. "/". $model_name.".php", "w+");
+        $fhander = fopen($dir. DIRECTORY_SEPARATOR . $model_name.".php", "w+");
         fwrite($fhander, $code);
         fclose($fhander);
     }

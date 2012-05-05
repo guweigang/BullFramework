@@ -76,7 +76,7 @@ class Bull_Cli_Php
      */
     protected $_config = array(
         'mode' => 'default',
-        'root' => '/',
+        'root' => DIRECTORY_SEPARATOR,
     );
     
     /**
@@ -447,7 +447,7 @@ class Bull_Cli_Php
         
         $code = 'define("BULL_CONFIG_MODE", "'.$this->_config['mode'].'");'
             . 'define("ROOT", "'.$this->_config['root'].'");'
-            . 'require ROOT."/Framework/Bootstrap.php";'
+            . 'require_once(ROOT.DIRECTORY_SEPARATOR."Framework".DIRECTORY_SEPARATOR."Bootstrap.php");'
             . '$bootstrap = new Bootstrap();'
             . '$bootstrap->execCli();'
             . "$code; ";
