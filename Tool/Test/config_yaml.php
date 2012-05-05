@@ -3,14 +3,13 @@
 define("ROOT", dirname(dirname(dirname(__FILE__))));
 define("BULL_CONFIG_MODE", "dev");
 
-require ROOT."/Bull/splClassLoader.php";
-
-$classloader = new splClassLoader(null, ROOT);
-$classloader->register();
+require ROOT. "/Framework/Bootstrap.php";
+$bootstrap = new Bootstrap();
+$bootstrap->execCli();
 
 $config = new Bull_Config_Yaml();
 
-$config->load("./config.yaml");
+$config->load("Tool/Test/config.yaml");
 
 var_dump($config->db->default->dsn);
 

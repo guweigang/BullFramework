@@ -107,7 +107,7 @@ class Bull_Db_Factory
     {
         if (!isset(self::$master[$name]))
         {
-            $conn_manager = self::$db_conn[$name];
+            $conn_manager = self::getConnection($name);
         
             if ($index === null)
             {
@@ -135,7 +135,7 @@ class Bull_Db_Factory
     {
         if (!isset(self::$slave[$name]))
         {
-            $conn_manager = self::$db_conn[$name];
+            $conn_manager = self::getConnection($name);
  
             if ($index === null)
             {

@@ -2,15 +2,14 @@
 
 define("ROOT", dirname(dirname(dirname(__FILE__))));
 
-require ROOT."/Bull/splClassLoader.php";
+require ROOT."/Bull/Util/splClassLoader.php";
 
 $classloader = new splClassLoader(null, ROOT);
 $classloader->register();
 
-echo Bull_Locale::get('INVALID_RANGE');
+$locale = new Bull_Util_Locale('zh_CN');
+
+echo $locale->get('HELLO_WORLD');
 
 echo PHP_EOL;
 
-$test = new Framework_Web_Test();
-
-$test->test();

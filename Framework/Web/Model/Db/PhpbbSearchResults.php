@@ -1,5 +1,5 @@
 <?php
-class Framework_Web_Model_Db_PhpbbSearchResults extends Bull_Db_AbstractModel
+class Framework_Web_Model_Db_PhpbbSearchResults extends Bull_Model_Abstract
 {
      protected $table = "phpbb_search_results";
 

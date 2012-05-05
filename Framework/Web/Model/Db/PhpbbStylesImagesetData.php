@@ -1,5 +1,5 @@
 <?php
-class Framework_Web_Model_Db_PhpbbStylesImagesetData extends Bull_Db_AbstractModel
+class Framework_Web_Model_Db_PhpbbStylesImagesetData extends Bull_Model_Abstract
 {
      protected $table = "phpbb_styles_imageset_data";
 

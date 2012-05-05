@@ -2,41 +2,29 @@
 
 class Bull_Config_Ini extends Bull_Config_Abstract
 {
-
     /**
      *
-     * Loads in the ini file specified in filename, and returns the settings in
-     * it as an associative multi-dimensional array
-     * 
-     * @param string $filename          The filename of the ini file being parsed
-     * @param boolean $process_sections By setting the process_sections parameter to TRUE,
-     *                                  you get a multidimensional array, with the section
-     *                                  names and settings included. The default for
-     *                                  process_sections is FALSE
-     * @param string $section_name      Specific section name to extract upon processing
-     * @throws Exception
-     * @return array|boolean
+     * Loads in the ini file specified in filename.
      *
      */
     public function load($file, $section_name = null)
     {
-        if (file_exists($file) == false) {
-            return false;
-        }
-
-        $process_sections = true;
+        $realfile = Bull_Util_File::exists($file);
         
+        if (!$realfile) {
+            throw new Bull_Config_Exception("File: {$file} Not exists.");
+        }
+        
+        $process_sections = true;
         // load the raw ini file
-        $ini = parse_ini_file($file, $process_sections);
+        $ini = parse_ini_file($realfile, $process_sections);
 
         // fail if there was an error while processing the specified ini file
         if ($ini === false) {
             return false;
         }
-
         // reset the result array
         $this->configs = array();
-
         if ($process_sections === true) {
             // loop through each section
             foreach ($ini as $section => $contents) {
@@ -47,7 +35,6 @@ class Bull_Config_Ini extends Bull_Config_Abstract
             // treat the whole ini file as a single section
             $this->configs = $this->_processSectionContents($ini);
         }
-
         //  extract the required section if required
         if ($process_sections === true) {
             if ($section_name !== null) {
@@ -55,13 +42,11 @@ class Bull_Config_Ini extends Bull_Config_Abstract
                 if (isset($this->configs[$section_name])) {
                     return $this->configs[$section_name];
                 } else {
-                    throw new Exception('Section ' . $section_name . ' not found in the ini file');
+                    throw new Bull_Config_Exception('Section ' . $section_name . ' not found in the ini file');
                 }
             }
         }
-
-        // if no specific section is required, just return the whole result
-        return $this->configs;
+        return $this;
     }
 
 

@@ -1,5 +1,5 @@
 <?php
-class Framework_Web_Model_Db_PhpbbPrivmsgs extends Bull_Db_AbstractModel
+class Framework_Web_Model_Db_PhpbbPrivmsgs extends Bull_Model_Abstract
 {
      protected $table = "phpbb_privmsgs";
 

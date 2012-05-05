@@ -1,5 +1,5 @@
 <?php
-class Framework_Web_Model_Dbtemp_WpPostmeta extends Bull_Db_AbstractModel
+class Framework_Web_Model_Dbtemp_WpPostmeta extends Bull_Model_Abstract
 {
      protected $table = "wp_postmeta";
 

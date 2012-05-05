@@ -8,19 +8,20 @@ $bootstrap = new Bootstrap();
 $bootstrap->execCli();
 
 $ini = array(
-    'include_path'    =>  ROOT . "/Framework",
     'error_reporting' =>  E_ALL | E_STRICT,
     'error_display'   =>  1,
     'html_errors'     =>  0,
 );
 
-$php = new Bull_Php(array('mode' => 'default', 'root' => ROOT));
+$php = new Bull_Cli_Php(array('mode' => 'default', 'root' => ROOT));
 
 
 $code = <<<'EOF'
 
-Bull_Db::factory("db", Bull_Registry::get("config")->get("db"));
-Bull_Db::factory("dbtemp", Bull_Registry::get("config")->get("dbtemp"));
+Bull_Di_Container::set('db', Bull_Di_Container::newInstance('Bull_Db_Front'));
+
+Bull_Di_Container::get('db')->setServer('db');
+Bull_Di_Container::get('db')->setServer('dbtemp');
 
 $model = Framework_Web_Model_Db_PhpbbAclGroups::getInstance();
 var_dump($model->selectOne());

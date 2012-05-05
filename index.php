@@ -6,7 +6,14 @@ require ROOT . "/Framework/Bootstrap.php";
 
 $bootstrap = new Bootstrap();
 
-$bootstrap->exec();
+$bootstrap->execWeb();
 
-$test = new Framework_Web_Test();
-$test->test();
+
+$di = 'Bull_Di_Container';
+$test = $di::set('test',
+                 function() use ($di) {
+                     return $di::newInstance("Framework_Web_Test",
+                                             array(),
+                                             array("test" => "Fuck, World!"));});
+
+$di::get('test')->helloworld();

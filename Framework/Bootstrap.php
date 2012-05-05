@@ -2,10 +2,13 @@
 
 class Bootstrap
 {
+    /* 系统路径 */
     public $system;
     
+    /* 配置模式 */
     public $mode;
-    
+
+    /* 构造器 */
     public function __construct()
     {
         $this->system = dirname(__DIR__);
@@ -13,7 +16,8 @@ class Bootstrap
     
     public function exec()
     {
-        require $this->system . "/Bull/splClassLoader.php";
+        set_include_path(get_include_path().PATH_SEPARATOR.$this->system);
+        require "Bull/Util/splClassLoader.php";
         $classloader = new splClassLoader(null, $this->system);
         $classloader->register();
     }
@@ -27,7 +31,7 @@ class Bootstrap
             : $_ENV['BULL_CONFIG_MODE'];
 
         $bootstrap = $this;
-        Bull_Registry::set('config', function () use ($bootstrap) {
+        Bull_Di_Container::set('config', function () use ($bootstrap) {
                 $config=new Bull_Config_Ini();
                 $config->load($bootstrap->system . "/Config/". $bootstrap->mode . ".ini");
                 return $config;
@@ -44,7 +48,7 @@ class Bootstrap
             : "default";
         
         $bootstrap = $this;
-        Bull_Registry::set('config', function () use ($bootstrap) {
+        Bull_Di_Container::set('config', function () use ($bootstrap) {
                 $config=new Bull_Config_Ini();
                 $config->load($bootstrap->system . "/Config/". $bootstrap->mode . ".ini");
                 return $config;

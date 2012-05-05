@@ -1,5 +1,5 @@
 <?php
-class Framework_Web_Model_Dbtemp_WpTermRelationships extends Bull_Db_AbstractModel
+class Framework_Web_Model_Dbtemp_WpTermRelationships extends Bull_Model_Abstract
 {
      protected $table = "wp_term_relationships";
 
