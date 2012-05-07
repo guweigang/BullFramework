@@ -3,11 +3,11 @@
 define("ROOT", dirname(dirname(dirname(__FILE__))));
 define("BULL_CONFIG_MODE", "dev");
 
-require ROOT. "/Framework/Bootstrap.php";
+require ROOT. "/Tool/Bootstrap.php";
 $bootstrap = new Bootstrap();
 $bootstrap->execCli();
 
-$config = new Bull_Config_Yaml();
+$config = new Bull_Parse_Yaml();
 
 $config->load("Tool/Test/config.yaml");
 

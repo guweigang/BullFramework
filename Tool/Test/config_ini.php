@@ -3,7 +3,7 @@
 define("ROOT", dirname(dirname(__DIR__)));
 define("BULL_CONFIG_MODE", "default");
 
-require ROOT. "/Framework/Bootstrap.php";
+require ROOT. "/Tool/Bootstrap.php";
 $bootstrap = new Bootstrap();
 $bootstrap->execCli();
 
