@@ -5,8 +5,6 @@ class Framework_Web_Model_Db_PhpbbIcons extends Bull_Model_Abstract
 
      protected $name  = "db";
 
-     protected static $instance = null;
-
      protected function postConstruct()      
      {
          $this->cols = array (

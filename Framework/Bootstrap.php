@@ -18,10 +18,17 @@ class Bootstrap
         set_include_path(get_include_path(). PATH_SEPARATOR . $this->system);
         
         require_once("Bull" . DIRECTORY_SEPARATOR . "Util" .
-                     DIRECTORY_SEPARATOR . "splClassLoader.php");
+                     DIRECTORY_SEPARATOR . "SplClassLoader.php");
         
-        $classloader = new splClassLoader(null, $this->system);
-        $classloader->register();
+        $classloader = new SplClassLoader();
+        $classloader->setMode(SplClassLoader::MODE_NORMAL);
+        
+        $classloader->add('Bull', $this->system);
+        $classloader->add('Framework', $this->system);
+        $classloader->add('Twig', $this->system. DIRECTORY_SEPARATOR . "Bull"
+                          . DIRECTORY_SEPARATOR. "View");
+        
+        $classloader->register(true);
     }
 
     public function execWeb()
@@ -33,11 +40,23 @@ class Bootstrap
 
         $bootstrap = $this;
         Bull_Di_Container::set('config', function () use ($bootstrap) {
-                $config=new Bull_Parse_Ini();
+                $config = new Bull_Parse_Ini();
                 $config->load("Framework" . DIRECTORY_SEPARATOR
                               . "Config". DIRECTORY_SEPARATOR . $bootstrap->mode . ".ini");
                 return $config;
             });
+        
+        $config = Bull_Di_Container::get('config');
+        $defautls = $config->system->defaults->get();
+        
+        $map = new Bull_Web_RouteMap();
+        $map->add('home', '/');
+        $map->add('only-controller', '/{:controller}(/)?');
+        $map->add('default', '/{:controller}/{:action}(/)?(.*)');
+        
+        $front = Bull_Di_Container::newInstance("Bull_Web_Front", array($map, $defautls));
+        $response = $front->exec();
+        $response->send();
     }
 
     public function execCli()

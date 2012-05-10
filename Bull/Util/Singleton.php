@@ -10,16 +10,19 @@
  */
 abstract class Bull_Util_Singleton
 {
+    protected static $instances = array();
+    
     protected function __construct($param = array()) {}
     
     public static function getInstance($param = array())
     {
+        $class = get_called_class();
         
-        if (!isset(static::$instance)) {
+        if (!isset(self::$instances[$class])) {
             
-            static::$instance = new static($param);
+            self::$instances[$class] = new $class($param);
         }
         
-        return static::$instance;
+        return self::$instances[$class];
     }
 }

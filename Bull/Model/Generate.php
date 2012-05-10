@@ -75,8 +75,6 @@ class {$class_prefix}_{$model_prefix}_{$model_name} extends Bull_Model_Abstract
 
      protected \$name  = "{$this->name}";
 
-     protected static \$instance = null;
-
      protected function postConstruct()      
      {
          \$this->cols = {$cols_code}

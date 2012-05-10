@@ -8,20 +8,14 @@ class Framework_Web_Test extends Bull_Web_Controller
     
     public $world;
     
-    public function __construct($hello, $world)
-    {
-        $this->hello = $hello;
-        $this->world = $world;
-        
-    }
-    
-    public function test($foo)
+    public function actionTest($foo)
     {
         echo "Test with all of it" . PHP_EOL;
         echo "Setter Config Value: ". $foo . PHP_EOL;
+        $this->data->fuck = "you mother fuckers.";
     }
 
-    public function test2(Bull_Config_Ini $config)
+    public function test2(Bull_Parse_Ini $config)
     {
         $this->config = $config;
 

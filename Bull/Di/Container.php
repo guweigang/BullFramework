@@ -108,15 +108,17 @@ class Bull_Di_Container
      */
     public static function translate($code)
     {
-        $code = trim($code);
-        $opentag  = '{{php';
-        $closetag = '}}';
-        $olen = strlen($opentag);
-        $clen = strlen($closetag);
+        if (is_string($code)) {
+            $code = trim($code);
+            $opentag  = '{{php';
+            $closetag = '}}';
+            $olen = strlen($opentag);
+            $clen = strlen($closetag);
         
-        if (substr($code, 0, $olen) == $opentag
-            && substr($code, -1 * $clen) == $closetag) {
-            $code = eval(substr($code, $olen, -1 * $clen));
+            if (substr($code, 0, $olen) == $opentag
+                && substr($code, -1 * $clen) == $closetag) {
+                $code = eval(substr($code, $olen, -1 * $clen));
+            }
         }
         return $code;
     }
@@ -128,6 +130,7 @@ class Bull_Di_Container
         $setter = Bull_Di_Container::get('config')->get("class.". $class .".setters");
         
         $params = array_merge((array) $param, $params);
+        
         // lazy-load params as needed
         foreach ($params as $key => & $val) {
             $val = Bull_Di_Container::translate($val);

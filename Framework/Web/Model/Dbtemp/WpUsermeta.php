@@ -5,8 +5,6 @@ class Framework_Web_Model_Dbtemp_WpUsermeta extends Bull_Model_Abstract
 
      protected $name  = "dbtemp";
 
-     protected static $instance = null;
-
      protected function postConstruct()      
      {
          $this->cols = array (

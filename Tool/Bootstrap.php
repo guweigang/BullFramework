@@ -16,12 +16,17 @@ class Bootstrap
     public function exec()
     {
         set_include_path(get_include_path(). PATH_SEPARATOR . $this->system);
-        
+
         require_once("Bull" . DIRECTORY_SEPARATOR . "Util" .
-                     DIRECTORY_SEPARATOR . "splClassLoader.php");
+                     DIRECTORY_SEPARATOR . "SplClassLoader.php");
         
-        $classloader = new splClassLoader(null, $this->system);
-        $classloader->register();
+        $classloader = new SplClassLoader();
+        $classloader->setMode(SplClassLoader::MODE_NORMAL);
+        $classloader->add('Bull', $this->system);
+        $classloader->add('Framework', $this->system);
+        $classloader->add('Twig', $this->system. DIRECTORY_SEPARATOR . "Bull"
+                          . DIRECTORY_SEPARATOR. "View");
+        $classloader->register(true);
     }
 
     public function execWeb()
