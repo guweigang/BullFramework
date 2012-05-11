@@ -206,7 +206,7 @@ class Bull_Http_Response
     public function sendHeaders()
     {
         if (headers_sent($file, $line)) {
-            throw new Exception\HeadersSent($file, $line);
+            throw new Bull_Http_Exception_HeadersSent($file, $line);
         }
         
         // determine status header type

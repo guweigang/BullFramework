@@ -4,10 +4,6 @@ class Framework_Web_Test extends Bull_Web_Controller
 {
     public $config;
 
-    public $hello;
-    
-    public $world;
-    
     public function actionTest($foo)
     {
         echo "Test with all of it" . PHP_EOL;
@@ -20,10 +16,5 @@ class Framework_Web_Test extends Bull_Web_Controller
         $this->config = $config;
 
         // var_dump($this->config->class);
-    }
-
-    public function helloworld() {
-        echo PHP_EOL;
-        echo $this->hello .", ". $this->world;
     }
 }

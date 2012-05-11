@@ -34,10 +34,10 @@ class Bootstrap
     public function execWeb()
     {
         $this->exec();
-        $this->mode   = empty($_ENV['BULL_CONFIG_MODE'])
+        $this->mode   = empty($_SERVER['BULL_CONFIG_MODE'])
             ? 'default'
-            : $_ENV['BULL_CONFIG_MODE'];
-
+            : $_SERVER['BULL_CONFIG_MODE'];
+        
         $bootstrap = $this;
         Bull_Di_Container::set('config', function () use ($bootstrap) {
                 $config = new Bull_Parse_Ini();
