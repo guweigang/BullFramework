@@ -34,9 +34,11 @@ $table = isset($argv[2])?$argv[2]:null;
 $model = isset($argv[3])?$argv[3]:null;
 
 $db = Bull_Di_Container::newInstance('Bull_Db_Front');
-$db->setServer($name);
+$config = Bull_Di_Container::get('config');
 
-$objGen = new Bull_Model_Generate($name);
+$db->setServer(array($name => $config->get($name)));
+
+$objGen = new Bull_Model_Generate($name, $db->getConnect($name), $config->system->directory, $config->model->directory);
 $objGen->execute($table, $model);
     
 EOF;

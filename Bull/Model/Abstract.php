@@ -3,6 +3,9 @@
  *
  * 数据库模型抽象类
  *
+ * 由于是Framework空间下所有模型的继承类，
+ * 所以严重依赖Bull_Parse_Ini和Bull_Di_Container。
+ *
  * @author Gu Weigang <guweigang@baidu.com>
  *
  * @package Bull.Model
@@ -60,8 +63,10 @@ abstract class Bull_Model_Abstract extends Bull_Util_Singleton
             $db = Bull_Di_Container::newInstance('Bull_Db_Front', $param);
             Bull_Di_Container::set('db', $db);
         }
-        
         $this->db = Bull_Di_Container::get('db');
+        $config   = Bull_Di_Container::get('config');
+        $this->db->setServer(array($this->name => $config->get($this->name)));
+        
         $this->postConstruct();
     }
 

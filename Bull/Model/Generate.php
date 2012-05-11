@@ -11,14 +11,48 @@
 
 class Bull_Model_Generate
 {
+    /**
+     *
+     * SQL对象
+     *
+     * @var Bull_Sql_Adapter_Abstract
+     *
+     */
     protected $sql;
 
+    /**
+     *
+     * 数据库配置节名
+     *
+     * @var string
+     *
+     */
     protected $name;
+
+    /**
+     *
+     * 系统目录
+     *
+     * @var string
+     *
+     */
+    protected $system;
+
+    /**
+     *
+     * 模型目录
+     *
+     * @var string
+     *
+     */
+    protected $model_dir;
     
-    public function __construct($name = null)
+    public function __construct($name, $sql, $system, $model_dir)
     {
         $this->name = $name;
-        $this->sql = Bull_Di_Container::newInstance('Bull_Db_Front')->getConnect($name);
+        $this->sql = $sql;
+        $this->system = $system;
+        $this->model_dir = $model_dir;
     }
     
     public function execute($table, $model)
@@ -60,8 +94,8 @@ class Bull_Model_Generate
         $cols_code = preg_replace('/(\'\w+\' =>\s*)/', $prefix11. "$1", $cols_code);
         $cols_code = preg_replace('/(\'\w+\' => \S+)/', " $1", $cols_code);
 
-        $root_dir   = Bull_Di_Container::get('config')->system->directory . DIRECTORY_SEPARATOR;
-        $model_dir  = Bull_Di_Container::get('config')->model->directory;
+        $root_dir   = $this->system . DIRECTORY_SEPARATOR;
+        $model_dir  = $this->model_dir;
         
         $class_prefix = str_replace(DIRECTORY_SEPARATOR, "_", substr($model_dir, strlen($root_dir)));
         

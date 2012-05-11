@@ -11,7 +11,7 @@ class Bull_Parse_Ini extends Bull_Parse_Abstract
         $realfile = Bull_Util_File::exists($file);
         
         if (!$realfile) {
-            throw new Bull_Config_Exception("File: {$file} Not exists.");
+            throw new Bull_Parse_Exception("File: {$file} Not exists.");
         }
         
         $process_sections = true;
@@ -41,7 +41,7 @@ class Bull_Parse_Ini extends Bull_Parse_Abstract
                 if (isset($this->configs[$section_name])) {
                     return $this->configs[$section_name];
                 } else {
-                    throw new Bull_Config_Exception('Section ' . $section_name .
+                    throw new Bull_Parse_Exception('Section ' . $section_name .
                                                     ' not found in the ini file ' . $realfile);
                 }
             }
@@ -73,7 +73,7 @@ class Bull_Parse_Ini extends Bull_Parse_Abstract
 
             // check if the extended section exists
             if (!isset($this->configs[$ext_source])) {
-                throw new Bull_Config_Exception('Unable to extend section ' .
+                throw new Bull_Parse_Exception('Unable to extend section ' .
                                                 $ext_source . ', section not found');
             }
 

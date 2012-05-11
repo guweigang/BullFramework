@@ -81,14 +81,16 @@ class Bull_Web_Front
      * @param HttpResponse $response The eventual HTTP response object.
      * 
      */
-    public function __construct($router=null, array $defaults = array()) 
+    public function __construct($router=null, $contex = null, array $defaults = array()) 
     {
-        $this->context  = new Bull_Web_Context();
+
         if (!($router instanceof Bull_Web_RouteMap)) {
             $this->router   = new Bull_Web_RouteMap();
         } else {
             $this->router = $router;
         }
+        
+        $this->context  = $contex;
         $this->factory  = new Bull_Web_ControllerFactory();
         $this->response = new Bull_Http_Response();
         
@@ -137,6 +139,7 @@ class Bull_Web_Front
         $path   = $this->context->getServer('PATH_INFO', '/');
         $server = $this->context->getServer();
         $route  = $this->router->match($path, $server);
+        
         // was there a match?
         if ($route) {
             // retain info
@@ -169,6 +172,7 @@ class Bull_Web_Front
         // create controller
         $obj = $this->factory->newInstance($controller, $params);
         
+        ob_start();
         // execute and get back response transfer object
         $this->transfer = $obj->exec();
     }

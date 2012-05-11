@@ -18,15 +18,10 @@ $php = new Bull_Cli_Php(array('mode' => 'default', 'root' => ROOT));
 
 $code = <<<'EOF'
 
-Bull_Di_Container::set('db', Bull_Di_Container::newInstance('Bull_Db_Front'));
-
-Bull_Di_Container::get('db')->setServer('db');
-Bull_Di_Container::get('db')->setServer('dbtemp');
-
-$model = Framework_Web_Model_Db_PhpbbAclGroups::getInstance();
+$model = Framework_Model_Db_PhpbbAclGroups::getInstance();
 var_dump($model->selectOne());
 
-$model = Framework_Web_Model_Dbtemp_WpUsers::getInstance();
+$model = Framework_Model_Dbtemp_WpUsers::getInstance();
 var_dump($model->selectOne());
     
 EOF;

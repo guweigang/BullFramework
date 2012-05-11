@@ -50,8 +50,8 @@ class Bull_Util_Locale
             $file = dirname($dir) . DIRECTORY_SEPARATOR
                 . 'Locale' . DIRECTORY_SEPARATOR . $this->lang . ".php";
 
-            $objlang  = new Bull_Config_Php();
-            $locale   = $objlang->load($file)->get('locale');
+            $obj  = new Bull_Parse_Php();
+            $locale   = $obj->load($file)->get('locale');
         
             /* 如果不存在相关的映射，则返回$key */
             if (!isset($locale[$key]))

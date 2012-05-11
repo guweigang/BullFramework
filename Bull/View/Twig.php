@@ -31,7 +31,6 @@ class Bull_View_Twig extends Bull_View_Abstract
         $file = "{$action}.html";
         $loader = new Twig_Loader_Filesystem($this->path);
         $twig   = new Twig_Environment($loader, $params);
-        ob_start();
         $twig->display($file, $this->data);
         return ob_get_clean();
     }

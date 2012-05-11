@@ -37,7 +37,9 @@ class Bull_Db_Front
      */
     private static $index = null;
 
+    /* 构造器 */
     public function __construct() {}
+    
     /**
      *
      * 生产数据库配置
@@ -45,9 +47,11 @@ class Bull_Db_Front
      * @param string $name 数据库配置节
      *
      */
-    public function setServer($name)
+    public function setServer($servers)
     {
-        Bull_Db_Factory::newConnection($name, Bull_Di_Container::get('config')->get($name));
+        foreach($servers as $name => $server) {
+            Bull_Db_Factory::newConnection($name, $server);
+        }
         return $this;
     }
     
@@ -100,7 +104,7 @@ class Bull_Db_Front
         $this->setName($name)->setIndex($idx);
         
         if (self::$name === null) {
-            throw new Bull_Db_Exception(Bull_Locale::get("ERR_DB_NOT_ACTIVE"));
+            throw new Bull_Db_Exception(Bull_Util_Locale::get("ERR_DB_NOT_ACTIVE"));
         }
         
         if ($type === null) {
@@ -108,7 +112,7 @@ class Bull_Db_Front
         }
         
         if ($type !== "master" && $type !== "slave") {
-            throw new Bull_Db_Exception(Bull_Locale::get("ERR_DB_WRONG_SERVER_TYPE"));
+            throw new Bull_Db_Exception(Bull_Util_Locale::get("ERR_DB_WRONG_SERVER_TYPE"));
         }
         
         $call = "Bull_Db_Factory::get". ucfirst($type);
@@ -190,7 +194,7 @@ class Bull_Db_Front
         /* No empty Value for $sql*/
         if (empty($sql))
         {
-            throw new Bull_Db_Exception_IllegalSql(Bull_Locale::get("ERR_ILLEGAL_SQL"));
+            throw new Bull_Db_Exception_IllegalSql(Bull_Util_Locale::get("ERR_ILLEGAL_SQL"));
         }
         /* All types of read statments  */
         $read_stats = array("SELECT", "SHOW", "DESCRIBE", "DESC", "EXPLAIN");

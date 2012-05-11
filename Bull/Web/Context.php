@@ -205,9 +205,9 @@ class Bull_Web_Context
                          '_POST'   => $_POST,
                          '_GET'    => $_GET);
         
-        if (isset($_SESSION)) {
-            $globals['_SESSION'] = $_SESSION;
-        }
+        /* if (isset($_SESSION)) { */
+        /*     $globals['_SESSION'] = $_SESSION; */
+        /* } */
         
         $this->input  = file_get_contents('php://input');
         $this->get    = ! isset($globals['_GET'])    ? array() : $globals['_GET'];

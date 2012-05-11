@@ -74,7 +74,7 @@ class Bull_Http_Headers
      * @return void
      * 
      */
-    public function setAll(array $headers = [])
+    public function setAll(array $headers = array())
     {
         $this->list = array();
         foreach ($headers as $label => $values) {

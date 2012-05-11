@@ -1,2 +1,2 @@
 <?php
-class Bull_Config_Exception extends Exception {}
+class Bull_Parse_Exception extends Exception {}

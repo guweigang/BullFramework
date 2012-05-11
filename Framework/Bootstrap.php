@@ -50,11 +50,14 @@ class Bootstrap
         $defautls = $config->system->defaults->get();
         
         $map = new Bull_Web_RouteMap();
-        $map->add('home', '/');
-        $map->add('only-controller', '/{:controller}(/)?');
-        $map->add('default', '/{:controller}/{:action}(/)?(.*)');
-        
-        $front = Bull_Di_Container::newInstance("Bull_Web_Front", array($map, $defautls));
+        $routes = $config->get('route');
+        foreach ($routes as $name => $route) {
+            $map->add($name, $route['path'],
+                      isset($route['detail'])?$route['detail']:null);
+        }
+
+        $contex = new Bull_Web_Context();
+        $front = Bull_Di_Container::newInstance("Bull_Web_Front", array($map, $contex, $defautls));
         $response = $front->exec();
         $response->send();
     }
@@ -73,5 +76,21 @@ class Bootstrap
                               . "Config". DIRECTORY_SEPARATOR . $bootstrap->mode . ".ini");
                 return $config;
             });
+
+        $config = Bull_Di_Container::get('config');
+        $defautls = $config->system->defaults->get();
+        
+        $map = new Bull_Web_RouteMap();
+
+        $routes = $config->get('route');
+        foreach ($routes as $name => $route) {
+            $map->add($name, $route['path'],
+                      isset($route['detail'])?$route['detail']:null);
+        }
+
+        $contex = new Bull_Cli_Context();
+        $front = Bull_Di_Container::newInstance("Bull_Web_Front", array($map, $contex, $defautls));
+        $response = $front->exec();
+        $response->send();
     }
 }
