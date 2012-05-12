@@ -8,7 +8,7 @@ class Framework_Web_Test extends Bull_Web_Controller
 
     public function postConstruct()
     {
-        $this->view->setCache(FRAMEWORK."/tmp/cache/view");
+        $this->view->setCache(FRAMEWORK."/Tmp/cache/view");
     }
     
     public function actionTest($foo)
