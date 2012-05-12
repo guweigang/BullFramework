@@ -42,11 +42,12 @@ class Bootstrap
         Bull_Di_Container::set('config', function () use ($bootstrap) {
                 $config = new Bull_Parse_Ini();
                 $config->load("Framework" . DIRECTORY_SEPARATOR
-                              . "Config". DIRECTORY_SEPARATOR . $bootstrap->mode . ".ini");
+                              . "config". DIRECTORY_SEPARATOR . $bootstrap->mode . ".ini");
                 return $config;
             });
         
         $config = Bull_Di_Container::get('config');
+        
         $defautls = $config->system->defaults->get();
         
         $map = new Bull_Web_RouteMap();
@@ -73,7 +74,7 @@ class Bootstrap
         Bull_Di_Container::set('config', function () use ($bootstrap) {
                 $config=new Bull_Parse_Ini();
                 $config->load("Framework" . DIRECTORY_SEPARATOR
-                              . "Config". DIRECTORY_SEPARATOR . $bootstrap->mode . ".ini");
+                              . "config". DIRECTORY_SEPARATOR . $bootstrap->mode . ".ini");
                 return $config;
             });
 

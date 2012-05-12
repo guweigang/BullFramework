@@ -90,7 +90,6 @@ class Bull_Cli_Context
             $pathinfo = isset($opts[1])?$opts[1]:"";
             return '/'. $pathinfo;
         }
-
         return $this->getValue('server', $key, $alt);
     }
     

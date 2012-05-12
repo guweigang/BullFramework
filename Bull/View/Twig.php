@@ -1,5 +1,4 @@
 <?php
-
 class Bull_View_Twig extends Bull_View_Abstract
 {
     public function renderString($str)
@@ -11,10 +10,10 @@ class Bull_View_Twig extends Bull_View_Abstract
 
     public function render($action, array $params = array())
     {
-        $action = ucfirst(strtolower($action));
+        $action = strtolower($action);
         $file = "{$action}.html";
         $loader = new Twig_Loader_Filesystem($this->path);
-        $twig   = new Twig_Environment($loader, $params);
+        $twig   = new Twig_Environment($loader, array_merge(array('cache' => $this->cache), $params));
         return $twig->render($file, $this->data);
     }
 
@@ -23,11 +22,12 @@ class Bull_View_Twig extends Bull_View_Abstract
         $loader = new Twig_Loader_String();
         $twig   = new Twig_Environment($loader);
         $twig->display($str, $this->data);
+        return ob_get_clean();
     }
 
     public function display($action, array $params = array())
     {
-        $action = ucfirst(strtolower($action));
+        $action = strtolower($action);
         $file = "{$action}.html";
         $loader = new Twig_Loader_Filesystem($this->path);
         $twig   = new Twig_Environment($loader, $params);

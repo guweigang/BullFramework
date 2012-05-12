@@ -36,7 +36,9 @@ class Bull_Web_ControllerFactory
     /**
      * 
      * Creates and returns a controller class based on a controller name.
-     * 
+     *
+     * @param Context $context The Context object.
+     *
      * @param string $name The controller name.
      * 
      * @param array $params Params to pass to the controller.
@@ -44,10 +46,10 @@ class Bull_Web_ControllerFactory
      * @return Page A controller instance.
      * 
      */
-    public function newInstance($name, $params)
+    public function newInstance($context, $name, $params)
     {
         $name = ucfirst(strtolower($name));
-        $file = "Framework".DIRECTORY_SEPARATOR."Web". DIRECTORY_SEPARATOR. $name . ".php";
+        $file = "Framework".DIRECTORY_SEPARATOR."Web".DIRECTORY_SEPARATOR.$name.".php";
         if (Bull_Util_File::exists($file)) {
             $class = "Framework_Web_".$name;
         } elseif ($this->not_found) {
@@ -55,6 +57,6 @@ class Bull_Web_ControllerFactory
         } else {
             throw new Bull_Web_Exception_NoClassForController("'$name'");
         }
-        return Bull_Di_Container::newInstance($class, array('params' => $params));
+        return Bull_Di_Container::newInstance($class, array($context, 'params' => $params));
     }
 }

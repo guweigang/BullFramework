@@ -76,25 +76,21 @@ class Bull_Web_Front
      * 
      * @param RouterMap $router The router map.
      * 
-     * @param Factory $factory A web page controller factory.
-     * 
-     * @param HttpResponse $response The eventual HTTP response object.
-     * 
+     * @param array $defaults Default controller and action.
+     *
      */
-    public function __construct($router=null, $contex = null, array $defaults = array()) 
+    public function __construct($router=null, $context = null, array $defaults = array()) 
     {
 
-        if (!($router instanceof Bull_Web_RouteMap)) {
-            $this->router   = new Bull_Web_RouteMap();
-        } else {
+        if ($router instanceof Bull_Web_RouteMap) {
             $this->router = $router;
+        } else {
+            $this->router = new Bull_Web_RouteMap();
         }
-        
-        $this->context  = $contex;
+        $this->context  = $context;
         $this->factory  = new Bull_Web_ControllerFactory();
         $this->response = new Bull_Http_Response();
-        
-        $this->defaults = (array) $defaults;        
+        $this->defaults = $defaults;        
     }
     
     /**
@@ -151,26 +147,15 @@ class Bull_Web_Front
                 // use a default controller
                 $controller = $this->defaults['controller'];
             }
-            
-            // does the route indicate an action?
-            if (!isset($route->values['action'])) {
-                // use a default action
-                $action = $this->defaults['action'];
-            } else {
-                $action = $route->values['action'];
-            }
-            
-            $params = array_merge($route->values,
-                                  array('controller'=> $controller,
-                                        'action' => $action));
-         } else {
+            $params = array_merge($route->values, $this->defaults);
+        } else {
             // no match
             $controller = null;
             $params     = array();
         }
         
         // create controller
-        $obj = $this->factory->newInstance($controller, $params);
+        $obj = $this->factory->newInstance($this->context, $controller, $params);
         
         ob_start();
         // execute and get back response transfer object

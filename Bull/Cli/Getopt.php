@@ -34,7 +34,6 @@ class Bull_Cli_Getopt
 
     public function get($key = null)
     {
-                
         if ($key !== null && isset($this->params[$key]))
         {
             return $this->params[$key];

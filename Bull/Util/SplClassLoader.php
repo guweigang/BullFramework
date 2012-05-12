@@ -1,8 +1,10 @@
 <?php
 /**
+ *
  * SplAutoloader defines the contract that any OO based autoloader must follow.
  *
  * @author Guilherme Blanco <guilhermeblanco@php.net>
+ *
  */
 interface SplAutoloader
 {
@@ -64,13 +66,14 @@ interface SplAutoloader
 }
 
 /**
+ *
  * SplClassLoader implementation that implements the technical interoperability
  * standards for PHP 5.3 namespaces and class names.
  *
  * https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md
  *
  * Example usage:
- *
+ * {{code: php
  *     $classLoader = new SplClassLoader();
  *
  *     // Configure the SplClassLoader to act normally or silently
@@ -95,6 +98,7 @@ interface SplAutoloader
  *
  *     // Register the autoloader, prepending it in the stack
  *     $classLoader->register(true);
+ * }}
  *
  * @author Guilherme Blanco <guilhermeblanco@php.net>
  * @author Jonathan H. Wage <jonwage@gmail.com>
@@ -102,6 +106,7 @@ interface SplAutoloader
  * @author Matthew Weier O'Phinney <matthew@zend.com>
  * @author Kris Wallsmith <kris.wallsmith@gmail.com>
  * @author Fabien Potencier <fabien.potencier@symfony-project.org>
+ *
  */
 
 class SplClassLoader implements SplAutoloader
@@ -126,9 +131,6 @@ class SplClassLoader implements SplAutoloader
      */
     private $mode = self::MODE_NORMAL;
  
-    /**
-     * {@inheritdoc}
-     */
     public function setMode($mode)
     {
         if ($mode & self::MODE_SILENT && $mode & self::MODE_NORMAL) {
@@ -180,47 +182,37 @@ class SplClassLoader implements SplAutoloader
         return $this->includePathLookup;
     }
  
-    /**
-     * {@inheritdoc}
-     */
     public function register($prepend = false)
     {
         spl_autoload_register(array($this, 'load'), true, $prepend);
     }
  
-    /**
-     * {@inheritdoc}
-     */
     public function unregister()
     {
         spl_autoload_unregister(array($this, 'load'));
     }
  
-    /**
-     * {@inheritdoc}
-     */
     public function add($resource, $resourcePath = null)
     {
         $this->resources[$resource] = (array) $resourcePath;
     }
  
-    /**
-     * {@inheritdoc}
-     */
     public function load($resourceName)
     {
         $resourceAbsolutePath = $this->getResourceAbsolutePath($resourceName);
-        
         switch (true) {
             case ($this->mode & self::MODE_SILENT):
                 if ($resourceAbsolutePath !== false) {
                     require $resourceAbsolutePath;
                 }
                 break;
- 
             case ($this->mode & self::MODE_NORMAL):
             default:
-                require $resourceAbsolutePath;
+                if ($resourceAbsolutePath !== false) {
+                    require $resourceAbsolutePath;
+                } else {
+                    throw new Exception("There is no file for class \"{$resourceName}\".");
+                }
                 break;
         }
  

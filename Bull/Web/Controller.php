@@ -66,11 +66,29 @@ class Bull_Web_Controller
      *
      * View Object
      *
-     * @var Bull_View_Abstract
+     * @var null | Bull_View_Abstract
      *
      */
     protected $view;
-    
+
+    /**
+     *
+     * View file
+     *
+     * @var string
+     *
+     */
+    protected $viewfile = "";
+
+    /**
+     *
+     * Default action.
+     *
+     * @var string
+     *
+     */
+    protected $defaction = "index";
+
     /**
      * 
      * Constructor.
@@ -82,21 +100,31 @@ class Bull_Web_Controller
      * @param array $params The path-info parameters.
      * 
      */
-    public function __construct(array $params = array())
+    public function __construct($context, array $params = array())
     {
-        $this->context  = new Bull_Web_Context();
+        $this->preConstruct();
+        
+        $this->context  = $context;
         $this->response = new Bull_Web_Response();
         $this->params   = $params;
         $this->data     = new StdClass();
         $this->action   = isset($this->params['action'])
                         ? $this->params['action']
                         : null;
+        $this->action   = $this->action === null
+                        ? $this->defaction
+                        : $this->action; 
         $this->format   = isset($this->params['format'])
                         ? $this->params['format']
                         : null;
-
         $this->view     = new Bull_View_Twig();
+        
+        $this->postConstruct();
     }
+
+    protected function preConstruct() {}
+
+    protected function postConstruct() {}
     
     /**
      * Getters
@@ -175,10 +203,7 @@ class Bull_Web_Controller
         return $this->response;
     }
     
-    /**
-     * The Execution Cycle
-     * -------------------
-     */
+    /* ====================The Execution Cycle==================== */
     
     /**
      * 
@@ -212,13 +237,18 @@ class Bull_Web_Controller
         $this->preAction();
         $this->action();
         $this->postAction();
-        
-        // the render cycle
-        $this->preRender();
-        $this->render();
-        $this->postRender();
-        
+
+        if ($this->view instanceof Bull_View_Abstract) {
+            // the render cycle
+            $this->preRender();
+            $this->render();
+            $this->postRender();
+        } else {
+            $content = ob_get_clean();
+            $this->response->setContent($content);
+        }
         // done
+        
         $this->postExec();
         return $this->response;
     }
@@ -330,11 +360,16 @@ class Bull_Web_Controller
     {
     }
 
-    public function setView(Bull_View_Abstract $view)
+    public function setView($viewfile)
     {
-        $this->view = $view;
+        $this->viewfile = $viewfile;
     }
 
+    public function disableView()
+    {
+        $this->view = null;
+    }
+    
     /**
      * 
      * Renders the view into the response and sets the response content-type.
@@ -352,19 +387,19 @@ class Bull_Web_Controller
             // set data
             $data = (array) $this->getData();
             $this->view->setData($data);
-            // set accept headers
-            $accept = $this->getContext()->getAccept();
-            $this->view->setAccept($accept);
+            
+            if ($this->context instanceof Bull_Web_Context) {
+                // set accept headers
+                $accept = $this->getContext()->getAccept();
+                $this->view->setAccept($accept);                
+            }
+            
             // render view and set content
-            $rc = new ReflectionClass(get_class($this));
-            $path = basename($rc->getFileName(), ".php");
+            $class = get_class($this);
+            $path = str_replace("_" , DIRECTORY_SEPARATOR, $class);
+            $this->view->setPath(ROOT . DIRECTORY_SEPARATOR . $path);
             
-            $this->view->setPath(ROOT . DIRECTORY_SEPARATOR . "Framework"
-                                 . DIRECTORY_SEPARATOR . "Web" . DIRECTORY_SEPARATOR
-                                 . "View". DIRECTORY_SEPARATOR . $path);
-            
-            $content = $this->view->render($this->action);
-            
+            $content = $this->view->render( $this->viewfile !== "" ? $this->viewfile : $this->action );
             $this->response->setContent($content);
         }
         $this->response->setContentType($this->view->getContentType());

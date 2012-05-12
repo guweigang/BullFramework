@@ -40,7 +40,7 @@ class Bootstrap
         Bull_Di_Container::set('config', function () use ($bootstrap) {
                 $config=new Bull_Parse_Ini();
                 $config->load("Tool" . DIRECTORY_SEPARATOR
-                              . "Config". DIRECTORY_SEPARATOR . $bootstrap->mode . ".ini");
+                              . "config". DIRECTORY_SEPARATOR . $bootstrap->mode . ".ini");
                 return $config;
             });
     }
@@ -56,7 +56,7 @@ class Bootstrap
         Bull_Di_Container::set('config', function () use ($bootstrap) {
                 $config=new Bull_Parse_Ini();
                 $config->load("Tool" . DIRECTORY_SEPARATOR
-                              . "Config". DIRECTORY_SEPARATOR . $bootstrap->mode . ".ini");
+                              . "config". DIRECTORY_SEPARATOR . $bootstrap->mode . ".ini");
                 return $config;
             });
     }
