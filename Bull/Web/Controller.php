@@ -1,12 +1,12 @@
 <?php
 /**
  * 
- * A page controller.
+ * A Web controller.
  * 
  * @package Bull.Web
  * 
  */
-class Bull_Web_Controller
+abstract class Bull_Web_Controller
 {
     /**
      * 
@@ -102,8 +102,6 @@ class Bull_Web_Controller
      */
     public function __construct($context, array $params = array())
     {
-        $this->preConstruct();
-        
         $this->context  = $context;
         $this->response = new Bull_Web_Response();
         $this->params   = $params;
@@ -117,9 +115,6 @@ class Bull_Web_Controller
         $this->format   = isset($this->params['format'])
                         ? $this->params['format']
                         : null;
-        $this->view     = new Bull_View_Twig();
-        
-        $this->postConstruct();
     }
 
     protected function preConstruct() {}
@@ -370,38 +365,5 @@ class Bull_Web_Controller
         $this->view = null;
     }
     
-    /**
-     * 
-     * Renders the view into the response and sets the response content-type.
-     * 
-     * N.b.: If the response content is already set, the view will not be
-     * rendered.
-     * 
-     * @return void
-     * 
-     */
-    protected function render()
-    {
-        $this->view->setFormat($this->getFormat());
-        if (! $this->response->getContent()) {
-            // set data
-            $data = (array) $this->getData();
-            $this->view->setData($data);
-            
-            if ($this->context instanceof Bull_Web_Context) {
-                // set accept headers
-                $accept = $this->getContext()->getAccept();
-                $this->view->setAccept($accept);                
-            }
-            
-            // render view and set content
-            $class = get_class($this);
-            $path = str_replace("_" , DIRECTORY_SEPARATOR, $class);
-            $this->view->setPath(ROOT . DIRECTORY_SEPARATOR . $path);
-            
-            $content = $this->view->render( $this->viewfile !== "" ? $this->viewfile : $this->action );
-            $this->response->setContent($content);
-        }
-        $this->response->setContentType($this->view->getContentType());
-    }
+    abstract protected function render();
 }

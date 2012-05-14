@@ -5,10 +5,7 @@
  *                                                                                            
  * @package Bull.Cli                                                                          
  *                                                                                            
- * @author Gu Weiganga <guweigang@baidu.com>
- *                                                                                            
  */
-
 class Bull_Cli_Vt100
 {
     /**                                                                                       

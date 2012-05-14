@@ -57,8 +57,8 @@ class Bootstrap
                       isset($route['detail'])?$route['detail']:null);
         }
 
-        $contex = new Bull_Web_Context();
-        $front = Bull_Di_Container::newInstance("Bull_Web_Front", array($map, $contex, $defautls));
+        $context = new Bull_Web_Context();
+        $front = Bull_Di_Container::newInstance("Bull_Web_Front", array($map, $context, $defautls));
         $response = $front->exec();
         $response->send();
     }
@@ -89,8 +89,8 @@ class Bootstrap
                       isset($route['detail'])?$route['detail']:null);
         }
 
-        $contex = new Bull_Cli_Context();
-        $front = Bull_Di_Container::newInstance("Bull_Web_Front", array($map, $contex, $defautls));
+        $context = new Bull_Cli_Context();
+        $front = Bull_Di_Container::newInstance("Bull_Web_Front", array($map, $context, $defautls));
         $response = $front->exec();
         $response->send();
     }

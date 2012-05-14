@@ -1,6 +1,6 @@
 <?php
 
-class Framework_Web_Home extends Bull_Web_Controller
+class Framework_Web_Home extends Framework_Controller
 {
     public function actionIndex()
     {

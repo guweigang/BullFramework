@@ -1,5 +1,5 @@
 <?php
-class Framework_Web_Test extends Bull_Web_Controller
+class Framework_Web_Test extends Framework_Controller
 {
     public function preConstruct()
     {

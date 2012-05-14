@@ -9,56 +9,71 @@
 interface SplAutoloader
 {
     /**
+     *
      * Defines autoloader to work silently if resource is not found.
      *
      * @const
+     *
      */
     const MODE_SILENT = 0;
  
     /**
+     *
      * Defines autoloader to work normally (requiring an un-existent resource).
      *
      * @const
+     *
      */
     const MODE_NORMAL = 1;
  
     /**
+     *
      * Defines autoloader to work in debug mode, loading file and validating requested resource.
      *
      * @const
+     *
      */
     const MODE_DEBUG = 2;
  
     /**
+     *
      * Define the autoloader work mode.
      *
      * @param integer $mode Autoloader work mode.
+     *
      */
     public function setMode($mode);
  
     /**
+     *
      * Add a new resource lookup path.
      *
      * @param string $resourceName Resource name, namespace or prefix.
      * @param mixed $resourcePath Resource single path or multiple paths (array).
+     *
      */
     public function add($resourceName, $resourcePath = null);
  
     /**
+     *
      * Load a resource through provided resource name.
      *
      * @param string $resourceName Resource name.
+     *
      */
     public function load($resourceName);
  
     /**
+     *
      * Register this as an autoloader instance.
      *
      * @param boolean Whether to prepend the autoloader or not in autoloader's list.
+     *
      */
     public function register($prepend = false);
  
     /**
+     *
      * Unregister this autoloader instance.
      *
      */
@@ -72,7 +87,7 @@ interface SplAutoloader
  *
  * https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md
  *
- * Example usage:
+ * Example Usage:
  * {{code: php
  *     $classLoader = new SplClassLoader();
  *
@@ -112,40 +127,63 @@ interface SplAutoloader
 class SplClassLoader implements SplAutoloader
 {
     /**
+     *
+     * Default file extension
+     *
      * @var string
+     *
      */
     private $fileExtension = '.php';
  
     /**
+     *
+     * Look up include path
+     *
      * @var boolean
+     *
      */
     private $includePathLookup = false;
  
     /**
+     *
+     * Resource array.
+     *
      * @var array
+     *
      */
     private $resources = array();
  
     /**
+     *
+     * Working mode of this Class.
+     *
      * @var integer
+     *
      */
     private $mode = self::MODE_NORMAL;
- 
+
+    /**
+     *
+     * Set Mode.
+     *
+     * @return void
+     *
+     */
     public function setMode($mode)
     {
         if ($mode & self::MODE_SILENT && $mode & self::MODE_NORMAL) {
-            throw new InvalidArgumentException(
-                sprintf('Cannot have %s working normally and silently at the same time!', __CLASS__)
-            );
+            throw new InvalidArgumentException(sprintf('Cannot have %s working normally and silently at the same time!',
+                                                       __CLASS__));
         }
- 
         $this->mode = $mode;
     }
  
     /**
+     *
      * Define the file extension of resource files in the path of this class loader.
      *
      * @param string $fileExtension
+     *
      */
     public function setFileExtension($fileExtension)
     {
@@ -153,9 +191,11 @@ class SplClassLoader implements SplAutoloader
     }
  
     /**
+     *
      * Retrieve the file extension of resource files in the path of this class loader.
      *
      * @return string
+     *
      */
     public function getFileExtension()
     {
@@ -163,9 +203,11 @@ class SplClassLoader implements SplAutoloader
     }
  
     /**
+     *
      * Turns on searching the include for class files. Allows easy loading installed PEAR packages.
      *
      * @param boolean $includePathLookup
+     *
      */
     public function setIncludePathLookup($includePathLookup)
     {
@@ -173,9 +215,11 @@ class SplClassLoader implements SplAutoloader
     }
  
     /**
+     *
      * Gets the base include path for all class files in the namespace of this class loader.
      *
      * @return boolean
+     *
      */
     public function getIncludePathLookup()
     {
@@ -215,7 +259,6 @@ class SplClassLoader implements SplAutoloader
                 }
                 break;
         }
- 
         if ($this->mode & self::MODE_DEBUG && ! $this->isResourceDeclared($resourceName)) {
             throw new RuntimeException(
                 sprintf('Autoloader expected resource "%s" to be declared in file "%s".',
@@ -225,11 +268,13 @@ class SplClassLoader implements SplAutoloader
     }
  
     /**
+     *
      * Transform resource name into its absolute resource path representation.
      *
      * @params string $resourceName
      *
      * @return string Resource absolute path.
+     *
      */
     private function getResourceAbsolutePath($resourceName)
     {
@@ -259,11 +304,13 @@ class SplClassLoader implements SplAutoloader
     }
  
     /**
+     *
      * Transform resource name into its relative resource path representation.
      *
      * @params string $resourceName
      *
      * @return string Resource relative path.
+     *
      */
     private function getResourceRelativePath($resourceName)
     {
@@ -282,11 +329,13 @@ class SplClassLoader implements SplAutoloader
     }
  
     /**
+     *
      * Check if resource is declared in user space.
      *
      * @params string $resourceName
      *
      * @return boolean
+     *
      */
     private function isResourceDeclared($resourceName)
     {

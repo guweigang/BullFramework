@@ -86,8 +86,8 @@ class Bull_Cli_Context
     public function getServer($key = null, $alt = null)
     {
         if ($key === 'PATH_INFO') {
-            $opts = $this->getArgv();
-            $pathinfo = isset($opts[1])?$opts[1]:"";
+            $params   = $this->getArgv();
+            $pathinfo = isset($params[1])?$params[1]:"";
             return '/'. $pathinfo;
         }
         return $this->getValue('server', $key, $alt);

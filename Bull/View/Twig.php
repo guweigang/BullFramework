@@ -10,7 +10,6 @@ class Bull_View_Twig extends Bull_View_Abstract
 
     public function render($action, array $params = array())
     {
-        $action = strtolower($action);
         $file = "{$action}.html";
         $loader = new Twig_Loader_Filesystem($this->path);
         $twig   = new Twig_Environment($loader, array_merge(array('cache' => $this->cache), $params));
@@ -27,7 +26,6 @@ class Bull_View_Twig extends Bull_View_Abstract
 
     public function display($action, array $params = array())
     {
-        $action = strtolower($action);
         $file = "{$action}.html";
         $loader = new Twig_Loader_Filesystem($this->path);
         $twig   = new Twig_Environment($loader, $params);

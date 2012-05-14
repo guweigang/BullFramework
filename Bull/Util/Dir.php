@@ -62,7 +62,6 @@ class Bull_Util_Dir
                 return $target;
             }
         }
-        
         // never found it
         return false;
     }

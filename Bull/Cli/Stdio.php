@@ -8,7 +8,6 @@
  * @package Bull.Cli
  *
  */
-
 class Bull_Cli_Stdio
 {
 
@@ -59,16 +58,12 @@ class Bull_Cli_Stdio
      * @param resource $stderr A handle for standard error.                                                
      *                                                                                                     
      */
-    public function __construct (                                                                          
-        $stdin,
-        $stdout,
-        $stderr,
-        Bull_Cli_Vt100 $vt100
-    ) {
-        $this->stdin  = $stdin;
-        $this->stdout = $stdout;
-        $this->stderr = $stderr;
-        $this->vt100  = $vt100;
+    public function __construct ()
+    {
+        $this->stdin  = fopen('php://stdin', 'r');
+        $this->stdout = fopen('php://stdout', 'w+');
+        $this->stderr = fopen('php://stderr', 'w+');
+        $this->vt100  = new Bull_Cli_Vt100();
     }
 
     /**                                                                                                    

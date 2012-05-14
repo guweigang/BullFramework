@@ -13,7 +13,7 @@ class Bull_Util_Locale
 {
     public $lang   = "zh_CN";
 
-    public function __construct($lang = "zh_CN")
+    public function __construct($lang="")
     {
         $lang = trim($lang);
         if (!empty($lang)) {
@@ -44,8 +44,7 @@ class Bull_Util_Locale
             array_unshift($stack, $class);
         }
 
-        foreach($stack as $name)
-        {
+        foreach($stack as $name) {
             $dir  = str_replace("_", DIRECTORY_SEPARATOR, $name);
             $file = dirname($dir) . DIRECTORY_SEPARATOR
                 . 'Locale' . DIRECTORY_SEPARATOR . $this->lang . ".php";
@@ -54,13 +53,11 @@ class Bull_Util_Locale
             $locale   = $obj->load($file)->get('locale');
         
             /* 如果不存在相关的映射，则返回$key */
-            if (!isset($locale[$key]))
-            {
+            if (!isset($locale[$key])) {
                 continue;
             } else {
                 /* 如果替换数组不为空，则替换相关映射中的格式符 */
-                if (!empty($replace))
-                {
+                if (!empty($replace)) {
                     return vsprintf($locale[$key], $replace);
                 } else {
                     /* return */

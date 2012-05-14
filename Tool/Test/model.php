@@ -1,7 +1,7 @@
 <?php
 
 define("ROOT", dirname(dirname(__DIR__)));
-define("BULL_CONFIG_MODE", "defalut");
+define("BULL_CONFIG_MODE", "default");
 
 require ROOT . "/Framework/Bootstrap.php";
 $bootstrap = new Bootstrap();

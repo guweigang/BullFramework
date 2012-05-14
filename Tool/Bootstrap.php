@@ -24,6 +24,7 @@ class Bootstrap
         $classloader->setMode(SplClassLoader::MODE_NORMAL);
         $classloader->add('Bull', $this->system);
         $classloader->add('Framework', $this->system);
+        $classloader->add('Tool', $this->system);
         $classloader->add('Twig', $this->system. DIRECTORY_SEPARATOR . "Bull"
                           . DIRECTORY_SEPARATOR. "View");
         $classloader->register(true);
