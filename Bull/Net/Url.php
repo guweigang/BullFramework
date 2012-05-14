@@ -11,87 +11,116 @@
 class Bull_Net_Url
 {
     /**
+     *
      * Do strict parsing in resolve() (see RFC 3986, section 5.2.2). Default
      * is true.
+     *
      */
     const OPTION_STRICT = 'strict';
 
     /**
+     *
      * Represent arrays in query using PHP's [] notation. Default is true.
+     *
      */
     const OPTION_USE_BRACKETS = 'use_brackets';
 
     /**
+     *
      * URL-encode query variable keys. Default is true.
+     *
      */
     const OPTION_ENCODE_KEYS = 'encode_keys';
 
     /**
+     *
      * Query variable separators when parsing the query string. Every character
      * is considered a separator. Default is "&".
+     *
      */
     const OPTION_SEPARATOR_INPUT = 'input_separator';
 
     /**
+     *
      * Query variable separator used when generating the query string. Default
      * is "&".
+     *
      */
     const OPTION_SEPARATOR_OUTPUT = 'output_separator';
 
     /**
+     *
      * Default options corresponds to how PHP handles $_GET.
+     *
      */
-    private $_options = array(
-        self::OPTION_STRICT           => true,
-        self::OPTION_USE_BRACKETS     => true,
-        self::OPTION_ENCODE_KEYS      => true,
-        self::OPTION_SEPARATOR_INPUT  => '&',
-        self::OPTION_SEPARATOR_OUTPUT => '&',
+    private $_options = array(self::OPTION_STRICT           => true,
+                              self::OPTION_USE_BRACKETS     => true,
+                              self::OPTION_ENCODE_KEYS      => true,
+                              self::OPTION_SEPARATOR_INPUT  => '&',
+                              self::OPTION_SEPARATOR_OUTPUT => '&',
     );
 
     /**
-     * @var  string|bool
+     *
+     * @var  string | bool
+     *
      */
     private $_scheme = false;
 
     /**
-     * @var  string|bool
+     *
+     * @var  string | bool
+     *
      */
     private $_userinfo = false;
 
     /**
-     * @var  string|bool
+     *
+     * @var  string | bool
+     *
      */
     private $_host = false;
 
     /**
-     * @var  string|bool
+     *
+     * @var  string | bool
+     *
      */
     private $_port = false;
 
     /**
+     *
      * @var  string
+     *
      */
     private $_path = '';
 
     /**
-     * @var  string|bool
+     *
+     * @var  string | bool
+     *
      */
     private $_query = false;
 
     /**
-     * @var  string|bool
+     *
+     * @var  string | bool
+     *
      */
     private $_fragment = false;
 
     /**
+     *
      * Constructor.
      *
      * @param string $url     an absolute or relative URL
+     *
      * @param array  $options an array of OPTION_xxx constants
      *
      * @return $this
+     *
      * @uses   self::parseUrl()
+     *
      */
     public function __construct($url, array $options = array())
     {
@@ -105,14 +134,18 @@ class Bull_Net_Url
     }
 
     /**
+     *
      * Magic Setter.
      *
      * This method will magically set the value of a private variable ($var)
      * with the value passed as the args
      *
      * @param  string $var      The private variable to set.
+     *
      * @param  mixed  $arg      An argument of any type.
+     *
      * @return void
+     *
      */
     public function __set($var, $arg)
     {
@@ -123,15 +156,18 @@ class Bull_Net_Url
     }
 
     /**
+     *
      * Magic Getter.
      *
      * This is the magic get method to retrieve the private variable
      * that was set by either __set() or it's setter...
      *
      * @param  string $var         The property name to retrieve.
+     *
      * @return mixed  $this->$var  Either a boolean false if the
      *                             property is not set or the value
      *                             of the private property.
+     *
      */
     public function __get($var)
     {
@@ -144,10 +180,12 @@ class Bull_Net_Url
     }
 
     /**
+     *
      * Returns the scheme, e.g. "http" or "urn", or false if there is no
      * scheme specified, i.e. if this is a relative URL.
      *
-     * @return  string|bool
+     * @return  string | bool
+     *
      */
     public function getScheme()
     {
@@ -155,15 +193,18 @@ class Bull_Net_Url
     }
 
     /**
+     *
      * Sets the scheme, e.g. "http" or "urn". Specify false if there is no
      * scheme specified, i.e. if this is a relative URL.
      *
-     * @param string|bool $scheme e.g. "http" or "urn", or false if there is no
+     * @param string | bool $scheme e.g. "http" or "urn", or false if there is no
      *                            scheme specified, i.e. if this is a relative
      *                            URL
      *
      * @return $this
+     *
      * @see    getScheme()
+     *
      */
     public function setScheme($scheme)
     {
@@ -172,10 +213,12 @@ class Bull_Net_Url
     }
 
     /**
+     *
      * Returns the user part of the userinfo part (the part preceding the first
      *  ":"), or false if there is no userinfo part.
      *
-     * @return  string|bool
+     * @return  string | bool
+     *
      */
     public function getUser()
     {
@@ -185,12 +228,14 @@ class Bull_Net_Url
     }
 
     /**
+     *
      * Returns the password part of the userinfo part (the part after the first
      *  ":"), or false if there is no userinfo part (i.e. the URL does not
      * contain "@" in front of the hostname) or the userinfo part does not
      * contain ":".
      *
-     * @return  string|bool
+     * @return  string | bool
+     *
      */
     public function getPassword()
     {
@@ -200,10 +245,12 @@ class Bull_Net_Url
     }
 
     /**
+     *
      * Returns the userinfo part, or false if there is none, i.e. if the
      * authority part does not contain "@".
      *
-     * @return  string|bool
+     * @return  string | bool
+     *
      */
     public function getUserinfo()
     {
@@ -211,13 +258,16 @@ class Bull_Net_Url
     }
 
     /**
+     *
      * Sets the userinfo part. If two arguments are passed, they are combined
      * in the userinfo part as username ":" password.
      *
-     * @param string|bool $userinfo userinfo or username
-     * @param string|bool $password optional password, or false
+     * @param string | bool $userinfo userinfo or username
+     *
+     * @param string | bool $password optional password, or false
      *
      * @return $this
+     *
      */
     public function setUserinfo($userinfo, $password = false)
     {
@@ -229,10 +279,12 @@ class Bull_Net_Url
     }
 
     /**
+     *
      * Returns the host part, or false if there is no authority part, e.g.
      * relative URLs.
      *
-     * @return  string|bool a hostname, an IP address, or false
+     * @return  string | bool a hostname, an IP address, or false
+     *
      */
     public function getHost()
     {
@@ -240,12 +292,14 @@ class Bull_Net_Url
     }
 
     /**
+     *
      * Sets the host part. Specify false if there is no authority part, e.g.
      * relative URLs.
      *
-     * @param string|bool $host a hostname, an IP address, or false
+     * @param string | bool $host a hostname, an IP address, or false
      *
      * @return $this
+     *
      */
     public function setHost($host)
     {
@@ -254,10 +308,12 @@ class Bull_Net_Url
     }
 
     /**
+     *
      * Returns the port number, or false if there is no port number specified,
      * i.e. if the default port is to be used.
      *
-     * @return  string|bool
+     * @return  string | bool
+     *
      */
     public function getPort()
     {
@@ -265,12 +321,14 @@ class Bull_Net_Url
     }
 
     /**
+     *
      * Sets the port number. Specify false if there is no port number specified,
      * i.e. if the default port is to be used.
      *
-     * @param string|bool $port a port number, or false
+     * @param string | bool $port a port number, or false
      *
      * @return $this
+     *
      */
     public function setPort($port)
     {
@@ -279,10 +337,12 @@ class Bull_Net_Url
     }
 
     /**
+     *
      * Returns the authority part, i.e. [ userinfo "@" ] host [ ":" port ], or
      * false if there is no authority.
      *
-     * @return string|bool
+     * @return string | bool
+     *
      */
     public function getAuthority()
     {
@@ -306,14 +366,16 @@ class Bull_Net_Url
     }
 
     /**
+     *
      * Sets the authority part, i.e. [ userinfo "@" ] host [ ":" port ]. Specify
      * false if there is no authority.
      *
-     * @param string|false $authority a hostname or an IP addresse, possibly
+     * @param string | false $authority a hostname or an IP addresse, possibly
      *                                with userinfo prefixed and port number
      *                                appended, e.g. "foo:bar@example.org:81".
      *
      * @return $this
+     *
      */
     public function setAuthority($authority)
     {
@@ -334,9 +396,11 @@ class Bull_Net_Url
     }
 
     /**
+     *
      * Returns the path part (possibly an empty string).
      *
      * @return string
+     *
      */
     public function getPath()
     {
@@ -344,11 +408,13 @@ class Bull_Net_Url
     }
 
     /**
+     *
      * Sets the path part (possibly an empty string).
      *
      * @param string $path a path
      *
      * @return $this
+     *
      */
     public function setPath($path)
     {
@@ -357,11 +423,14 @@ class Bull_Net_Url
     }
 
     /**
+     *
      * Returns the query string (excluding the leading "?"), or false if "?"
      * is not present in the URL.
      *
-     * @return  string|bool
+     * @return  string | bool
+     *
      * @see     self::getQueryVariables()
+     *
      */
     public function getQuery()
     {
@@ -369,13 +438,16 @@ class Bull_Net_Url
     }
 
     /**
+     *
      * Sets the query string (excluding the leading "?"). Specify false if "?"
      * is not present in the URL.
      *
-     * @param string|bool $query a query string, e.g. "foo=1&bar=2"
+     * @param string | bool $query a query string, e.g. "foo=1&bar=2"
      *
      * @return $this
+     *
      * @see    self::setQueryVariables()
+     *
      */
     public function setQuery($query)
     {
@@ -384,9 +456,11 @@ class Bull_Net_Url
     }
 
     /**
+     *
      * Returns the fragment name, or false if "#" is not present in the URL.
      *
-     * @return  string|bool
+     * @return  string | bool
+     *
      */
     public function getFragment()
     {
@@ -394,12 +468,14 @@ class Bull_Net_Url
     }
 
     /**
+     *
      * Sets the fragment name. Specify false if "#" is not present in the URL.
      *
-     * @param string|bool $fragment a fragment excluding the leading "#", or
+     * @param string | bool $fragment a fragment excluding the leading "#", or
      *                              false
      *
      * @return $this
+     *
      */
     public function setFragment($fragment)
     {
@@ -408,11 +484,13 @@ class Bull_Net_Url
     }
 
     /**
+     *
      * Returns the query string like an array as the variables would appear in
      * $_GET in a PHP script. If the URL does not contain a "?", an empty array
      * is returned.
      *
      * @return  array
+     *
      */
     public function getQueryVariables()
     {
@@ -466,11 +544,13 @@ class Bull_Net_Url
     }
 
     /**
+     *
      * Sets the query string to the specified variable in the query string.
      *
      * @param array $array (name => value) array
      *
      * @return $this
+     *
      */
     public function setQueryVariables(array $array)
     {
@@ -486,12 +566,14 @@ class Bull_Net_Url
     }
 
     /**
+     *
      * Sets the specified variable in the query string.
      *
      * @param string $name  variable name
      * @param mixed  $value variable value
      *
      * @return $this
+     *
      */
     public function setQueryVariable($name, $value)
     {
@@ -502,11 +584,13 @@ class Bull_Net_Url
     }
 
     /**
+     *
      * Removes the specifed variable from the query string.
      *
      * @param string $name a query string variable, e.g. "foo" in "?foo=1"
      *
      * @return void
+     *
      */
     public function unsetQueryVariable($name)
     {
@@ -516,9 +600,11 @@ class Bull_Net_Url
     }
 
     /**
+     *
      * Returns a string representation of this URL.
      *
      * @return  string
+     *
      */
     public function getURL()
     {
@@ -547,21 +633,26 @@ class Bull_Net_Url
     }
 
     /**
+     *
      * Returns a string representation of this URL.
      *
      * @return  string
+     *
      * @see toString()
+     *
      */
     public function __toString()
     {
         return $this->getURL();
     }
 
-    /** 
+    /**
+     *
      * Returns a normalized string representation of this URL. This is useful
      * for comparison of URLs.
      *
      * @return  string
+     *
      */
     public function getNormalizedURL()
     {
@@ -570,15 +661,16 @@ class Bull_Net_Url
         return $url->getUrl();
     }
 
-    /** 
-     * Returns a normalized Net_URL2 instance.
+    /**
      *
-     * @return  Net_URL2
+     * Returns a normalized Bull_Net_Url instance.
+     *
+     * @return  Bull_Net_Url
+     *
      */
     public function normalize()
     {
         // See RFC 3886, section 6
-
         // Schemes are case-insensitive
         if ($this->_scheme) {
             $this->_scheme = strtolower($this->_scheme);
@@ -616,9 +708,11 @@ class Bull_Net_Url
     }
 
     /**
+     *
      * Returns whether this instance represents an absolute URL.
      *
      * @return  bool
+     *
      */
     public function isAbsolute()
     {
@@ -626,16 +720,18 @@ class Bull_Net_Url
     }
 
     /**
-     * Returns an Net_URL2 instance representing an absolute URL relative to
+     *
+     * Returns an Bull_Net_Url instance representing an absolute URL relative to
      * this URL.
      *
-     * @param Net_URL2|string $reference relative URL
+     * @param Bull_Net_Url | string $reference relative URL
      *
-     * @return Net_URL2
+     * @return Bull_Net_Url
+     *
      */
     public function resolve($reference)
     {
-        if (!$reference instanceof Net_URL2) {
+        if (!$reference instanceof Bull_Net_Url) {
             $reference = new self($reference);
         }
         if (!$this->isAbsolute()) {
@@ -697,12 +793,14 @@ class Bull_Net_Url
     }
 
     /**
+     *
      * Removes dots as described in RFC 3986, section 5.2.4, e.g.
      * "/foo/../bar/baz" => "/bar/baz"
      *
      * @param string $path a path
      *
      * @return string a path
+     *
      */
     public static function removeDotSegments($path)
     {
@@ -747,12 +845,15 @@ class Bull_Net_Url
     }
 
     /**
+     *
      * Percent-encodes all non-alphanumeric characters except these: _ . - ~
      * Similar to PHP's rawurlencode(), except that it also encodes ~ in PHP
      * 5.2.x and earlier.
      *
      * @param  $raw the string to encode
+     *
      * @return string
+     *
      */
     public static function urlencode($string)
     {
@@ -764,10 +865,12 @@ class Bull_Net_Url
     }
 
     /**
-     * Returns a Net_URL2 instance representing the canonical URL of the
+     *
+     * Returns a Bull_Net_Url instance representing the canonical URL of the
      * currently executing PHP script.
      *
      * @return  string
+     *
      */
     public static function getCanonical()
     {
@@ -790,9 +893,11 @@ class Bull_Net_Url
     }
 
     /**
+     *
      * Returns the URL used to retrieve the current request.
      *
      * @return  string
+     *
      */
     public static function getRequestedURL()
     {
@@ -800,10 +905,12 @@ class Bull_Net_Url
     }
 
     /**
-     * Returns a Net_URL2 instance representing the URL used to retrieve the
+     *
+     * Returns a Bull_Net_Url instance representing the URL used to retrieve the
      * current request.
      *
-     * @return  Net_URL2
+     * @return  Bull_Net_Url
+     *
      */
     public static function getRequested()
     {
@@ -821,11 +928,13 @@ class Bull_Net_Url
     }
 
     /**
+     *
      * Returns the value of the specified option.
      *
      * @param string $optionName The name of the option to retrieve
      *
      * @return  mixed
+     *
      */
     public function getOption($optionName)
     {
@@ -834,15 +943,19 @@ class Bull_Net_Url
     }
 
     /**
+     *
      * A simple version of http_build_query in userland. The encoded string is
      * percentage encoded according to RFC 3986.
      *
      * @param array  $data      An array, which has to be converted into
      *                          QUERY_STRING. Anything is possible.
+     *
      * @param string $seperator See {@link self::OPTION_SEPARATOR_OUTPUT}
+     *
      * @param string $key       For stacked values (arrays in an array).
      *
      * @return string
+     *
      */
     protected function buildQuery(array $data, $separator, $key = null)
     {
@@ -868,14 +981,18 @@ class Bull_Net_Url
     }
 
     /**
+     *
      * This method uses a funky regex to parse the url into the designated parts.
      *
      * @param string $url
      *
      * @return void
+     *
      * @uses   self::$_scheme, self::setAuthority(), self::$_path, self::$_query,
      *         self::$_fragment
+     *
      * @see    self::__construct()
+     *
      */
     protected function parseUrl($url)
     {
