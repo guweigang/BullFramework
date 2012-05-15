@@ -56,7 +56,7 @@ class Bootstrap
             $map->add($name, $route['path'],
                       isset($route['detail'])?$route['detail']:null);
         }
-
+        
         $context = new Bull_Web_Context();
         $front = Bull_Di_Container::newInstance("Bull_Web_Front", array($map, $context, $defautls));
         $response = $front->exec();

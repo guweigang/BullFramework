@@ -1,0 +1,33 @@
+{% include "Layout/header.html" %}
+<div class="page-header">
+  <h1>骚牛 - 数据库读取演示</h1>
+</div>
+{% if error %}
+<script type="text/javascript">
+  alert("{{error}}");
+</script>
+{% endif %}
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>姓名</th>
+      <th>地址</th>
+      <th>留言</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for shop in shops %}
+  <tr>
+    <td>{{ shop.name|e }}</td>
+    <td class="muted">{{ shop.address|e }}</td>
+    <td>{{ shop.comment|e }}</td>
+  </tr>
+  {% else %}
+  <tr>
+    <td colspan="3">未找到任何记录</td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+<iframe src="javascript:false;" id="pframe" name="pframe" frameborder="0" scrolling="no" style="display:none"></iframe>
+{% include "Layout/footer.html" %}

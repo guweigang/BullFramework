@@ -11,11 +11,11 @@ class Framework_Web_Test extends Framework_Controller
         $this->view->setCache(FRAMEWORK."/Tmp/cache/view");
     }
     
-    public function actionTest($foo)
+    public function actionTest($id)
     {
         // $this->disableView();
         // $this->setView("test2");
-        echo $foo;
+        echo "Get Param id: ". $id . PHP_EOL;
         echo "hello." . PHP_EOL;
         $this->data->fuck = "you mother fuckers.";
     }

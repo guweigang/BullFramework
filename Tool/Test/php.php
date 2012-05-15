@@ -1,9 +1,8 @@
 <?php
-
 define("ROOT", dirname(dirname(__DIR__)));
-define("BULL_CONFIG_MODE", "defalut");
+define("BULL_CONFIG_MODE", "product");
 
-require ROOT . "/Framework/Bootstrap.php";
+require ROOT . "/Tool/Bootstrap.php";
 $bootstrap = new Bootstrap();
 $bootstrap->execCli();
 
@@ -13,22 +12,38 @@ $ini = array(
     'html_errors'     =>  0,
 );
 
-$shortopts  = ""; 
-$shortopts .= "c:";  // Db config prefix for short
-$shortopts .= "t:";  // Table name for short
-$shortopts .= "m::"; // Model name for short
+$options = array(
+    'config' => array(
+        'long'    => 'config',
+        'short'   => 'c',
+        'param'   => Bull_Cli_Option::PARAM_REQUIRED,
+        'multi'   => false,
+        'default' => null,
+    ),
+    'table' => array(
+        'long'    => 'table',
+        'short'   => 't',
+        'param'   => Bull_Cli_Option::PARAM_REQUIRED,
+        'multi'   => false,
+        'default' => '*',
+    ),
+    'model' => array(
+        'long'    => 'model',
+        'short'   => 'm',
+        'param'   => Bull_Cli_Option::PARAM_OPTIONAL,
+        'multi'   => false,
+        'default' => null,
+    ),
+);
 
-$command = new Bull_Cli_Command($shortopts);
+$cli    = new Bull_Cli_Front($options);
+$params = $cli->getOpt()->getOptionValues();
 
-$command->getOpt()->checkParams();
+var_dump($params);
 
-$params = $command->getOpt()->get();
-
-$php = new Bull_Cli_Php(array('mode' => 'default', 'root' => ROOT));
-
+$php = new Bull_Cli_Php(array('mode' => BULL_CONFIG_MODE, 'root' => ROOT));
 
 $code = <<<'EOF'
-
 $name  = isset($argv[1])?$argv[1]:null;
 $table = isset($argv[2])?$argv[2]:null;
 $model = isset($argv[3])?$argv[3]:null;

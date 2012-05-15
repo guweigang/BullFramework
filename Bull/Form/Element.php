@@ -290,7 +290,7 @@ class Bull_Form_Element
     {
         if ($bolStatus !== true && $bolStatus !== false && $bolStatus !== null)
         {
-            throw new Exception(Bull_Locale::get("NOT_ALLOWED_PARAMETER"));
+            throw new Exception("Not Allowed Parameter");
         }
         
         if ($bolStatus === $this->bolStatus)

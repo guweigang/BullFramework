@@ -12,7 +12,7 @@
  * 
  * {{code: php
  *     define("ROOT", "/path/to/system");
- *     require "Framework/Bootstrap.php";
+ *     require "Tool/Bootstrap.php";
  *     $bootstrap = new Bootstrap();
  *     $bootstrap->execCli();
  *
@@ -447,7 +447,7 @@ class Bull_Cli_Php
         
         $code = 'define("BULL_CONFIG_MODE", "'.$this->_config['mode'].'");'
             . 'define("ROOT", "'.$this->_config['root'].'");'
-            . 'require_once(ROOT.DIRECTORY_SEPARATOR."Framework".DIRECTORY_SEPARATOR."Bootstrap.php");'
+            . 'require_once(ROOT.DIRECTORY_SEPARATOR."Tool".DIRECTORY_SEPARATOR."Bootstrap.php");'
             . '$bootstrap = new Bootstrap();'
             . '$bootstrap->execCli();'
             . "$code; ";

@@ -9,7 +9,7 @@
  *
  */
 
-class Bull_Util_Locale
+final class Bull_Util_Locale
 {
     public $lang   = "zh_CN";
 

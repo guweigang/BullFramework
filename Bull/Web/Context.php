@@ -518,6 +518,15 @@ class Bull_Web_Context
      */
     public function getServer($key = null, $alt = null)
     {
+        if ($key == 'PATH_INFO') {
+            if (!isset($_SERVER['PATH_INFO'])) {
+                $path_info = isset($_SERVER['REDIRECT_PATH_INFO'])
+                           ? '/'.$_SERVER['REDIRECT_PATH_INFO']
+                           : $alt;
+                return $path_info;
+            }
+        }
+        
         return $this->getValue('server', $key, $alt);
     }
     

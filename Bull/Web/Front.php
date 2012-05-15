@@ -135,7 +135,7 @@ class Bull_Web_Front
         $path   = $this->context->getServer('PATH_INFO', '/');
         $server = $this->context->getServer();
         $route  = $this->router->match($path, $server);
-        
+
         // was there a match?
         if ($route) {
             // retain info

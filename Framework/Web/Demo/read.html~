@@ -1,0 +1,26 @@
+{% include "Layout/header.html" %}
+<div class="page-header">
+  <h1>骚牛 - 数据库读取演示</h1>
+</div>
+<form method="POST" action="demo/create#" target="pframe">
+  <p>
+    <label for="name">姓名</label>
+    <input type="text" name="name" id="name" class="span3" placeholder="输入姓名" />
+    <span class="help-inline" id="_err_name"></span>
+  </p>
+  <p>
+    <label for="address">收货地址</label>
+    <input type="text" name="address" id="address" class="span6" placeholder="收货地址" />
+    <span class="help-inline" id="_err_address"></span>
+  </p>
+  <p>
+    <label for="comment">留言</label>
+    <textarea id="comment" name="comment" rows="4" class="input-xlarge" placeholder="留言"></textarea>
+    <span class="help-inline" id="_err_comment"></span>
+  </p>
+  <p>
+    <button type="submit" class="btn">提交</button>
+  </p>
+</form>
+<iframe src="javascript:false;" id="pframe" name="pframe" frameborder="0" scrolling="no" style="display:none"></iframe>
+{% include "Layout/footer.html" %}

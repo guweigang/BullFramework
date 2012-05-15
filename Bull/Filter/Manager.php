@@ -91,6 +91,15 @@ class Bull_Filter_Manager
      * @return 
      *
      */
+
+    protected $objLocale;
+
+
+    public function __construct()
+    {
+        $this->objLocale = new Bull_Util_Locale('zh_CN');
+    }
+    
     public function free()
     {
         foreach($this->arrFilter as $key => $val)
@@ -401,7 +410,7 @@ class Bull_Filter_Manager
             /* ... 则设置验证失败值 */
             if ($bolBlank)
             {
-                $this->arrChainInvalid[$key][] = Bull_Filter_Locale::get("INVALID_NOT_BLANK");
+                $this->arrChainInvalid[$key][] = $this->objLocale->get("INVALID_NOT_BLANK", __CLASS__);
             }
         }
 
@@ -463,8 +472,8 @@ class Bull_Filter_Manager
                     /* 如果是验证，且结果为假，则设置验证失败提示 */
                     $strInvalid = $this->getFilter($strMethod)->getInvalide();
                     
-                    $this->arrChainInvalid[$key][] = Bull_Filter_Locale::get($strInvalid,
-                                                                            $arrLocaleParams);
+                    $this->arrChainInvalid[$key][] = $this->objLocale->get($strInvalid, __CLASS__,
+                                                                           $arrLocaleParams);
                 }
             }
         }
