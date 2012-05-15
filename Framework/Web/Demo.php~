@@ -1,6 +1,0 @@
-<?php
-class Framework_Web_Demo extends Framework_Controller
-{
-
-
-}
