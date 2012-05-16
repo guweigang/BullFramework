@@ -6,13 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <base href="http://localhost:8080/bull/" />
+    <base href="http://172.22.163.10:8080/bull/" />
     <!-- Le styles -->
     <link href="Framework/Public/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="Framework/Public/assets/js/google-code-prettify/prettify.css" rel="stylesheet">
     <style type="text/css">
       body {
         padding-top: 60px;
         padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+      .red {
+          color:red;
       }
     </style>
     <link href="Framework/Public/assets/css/bootstrap-responsive.css" rel="stylesheet">
@@ -44,21 +51,32 @@
   <body>
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
-        <div class="container">
+        <div class="container-fluid">
           <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#">Bull Framework</a>
+          <a class="brand" href="#">BULL Framework</a>
+          <div class="btn-group pull-right">
+            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="icon-user"></i> BullSoft
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="#">个人资料</a></li>
+              <li class="divider"></li>
+              <li><a href="#">注销</a></li>
+            </ul>
+          </div>
           <div class="nav-collapse">
             <ul class="nav">
-              <li class="active"><a href="home">Home</a></li>
-              <li><a href="about">About</a></li>
-              <li><a href="contact">Contact</a></li>
+              <li class="{% if controller=="home" %}active{% endif %}"><a href="home">Home</a></li>
+              <li class="{% if controller=="demo" %}active{% endif %}"><a href="demo">Demo</a></li>
+              <li class="{% if controller=="about" %}active{% endif %}"><a href="about">About</a></li>
+              <li class="{% if controller=="contact" %}active{% endif %}"><a href="contact">Contact</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
       </div>
     </div>
-    <div class="container">

@@ -1,4 +1,4 @@
-SetEnv BULL_CONFIG_MODE default
+SetEnv BULL_CONFIG_MODE product
 <IfModule mod_rewrite.c>
     # turn on rewriting
     RewriteEngine On

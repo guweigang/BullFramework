@@ -62,7 +62,6 @@ class Bull_Util_File
                 return $target;
             }
         }
-        
         // never found it
         return false;
     }

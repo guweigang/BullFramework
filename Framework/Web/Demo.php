@@ -3,13 +3,11 @@ class Framework_Web_Demo extends Framework_Controller
 {
     public function actionIndex()
     {
-        
     }
 
     public function actionCreate()
     {
         if ($this->context->isPost()) {
-
             $this->disableView();
             $elements = new Bull_Form_Element();
             $posts = $this->context->getPost();
@@ -21,8 +19,7 @@ class Framework_Web_Demo extends Framework_Controller
             $elements->addFilter("name",    "ValidateNotBlank");
             $elements->addFilter("address", "ValidateNotBlank");
             $elements->addFilter("comment", "ValidateNotBlank");
-            $elements->setValues($posts);
-            $elements->validate();
+            $elements->setValues($posts)->validate();
 
             $output = '<html><head><meta charset="utf-8"></head>'
                     . '<body><script language="javascript"> if (parent) {';
@@ -55,8 +52,7 @@ class Framework_Web_Demo extends Framework_Controller
             $elements = new Bull_Form_Element();
             $elements->setElement('id');
             $elements->addFilter('id', 'ValidateNumeric');
-            $elements->setValue('id', $id);
-            $elements->validate();
+            $elements->setValue('id', $id)->validate();
             if ($elements->isFailure()) {
                 $invalid = array_filter($elements->getInvalids('id'));
                 $txt = $invalid[0];

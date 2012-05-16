@@ -77,6 +77,7 @@ class Bull_Form_Element
         {
             $this->arrElements[$strName]['require'] = true;
         }
+        return $this;
     }
 
     /**
@@ -96,6 +97,7 @@ class Bull_Form_Element
         {
             $this->addFilter($strName, $mixSpec);
         }
+        return $this;
     }
 
     /**
@@ -118,6 +120,7 @@ class Bull_Form_Element
             $this->arrElements[$strName]['invalid'][] = $strText;
             $this->arrElements[$strName]['status'] = false;
         }
+        return $this;
     }
 
     /**
@@ -135,6 +138,7 @@ class Bull_Form_Element
         {
             $this->addInvalid($name, $spec);
         }
+        return $this;
     }
 
     /**
@@ -199,6 +203,8 @@ class Bull_Form_Element
         
         /* 生成元素 */
         $this->arrElements[$strName] = $arrElement;
+
+        return $this;
     }
 
     /**
@@ -229,6 +235,8 @@ class Bull_Form_Element
         {
             $this->setElement($name, $info);
         }
+
+        return $this;
     }
 
     /**
@@ -248,6 +256,8 @@ class Bull_Form_Element
         {
             $this->arrElements[$strName]['value'] = $mixValue;
         }
+        
+        return $this;
     }
 
     /**
@@ -275,6 +285,8 @@ class Bull_Form_Element
                 $element['value'] = $arrSpec[$name];
             }
         }
+
+        return $this;
     }
 
     /**
@@ -299,6 +311,8 @@ class Bull_Form_Element
         }
         
         $this->bolStatus = (bool) $bolStatus;
+
+        return $this;
     }
 
     /**
@@ -352,7 +366,8 @@ class Bull_Form_Element
         }
 
         /* 返回验证结果 */
-        return $bolStatus;
+        // return $bolStatus;
+        return $this;
     }
 
     /**

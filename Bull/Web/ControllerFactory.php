@@ -48,12 +48,17 @@ class Bull_Web_ControllerFactory
      */
     public function newInstance($context, $name, $params)
     {
-        $name = ucfirst(strtolower($name));
-        $file = "Framework".DIRECTORY_SEPARATOR."Web".DIRECTORY_SEPARATOR.$name.".php";
+        $inflect = new Bull_Util_Inflect();
+        $name    = $inflect->dashesToUnder(strtolower($name));
+        $name    = $inflect->underToStudly($name);
+        $class   = "Framework_Web_".$name;
+        $file    = $inflect->classToFile($class);
+        
         if (Bull_Util_File::exists($file)) {
-            $class = "Framework_Web_".$name;
+            // do nothing
         } elseif ($this->not_found) {
-            $class = $this->not_found;
+            $class  = $this->not_found;
+            $params = array("controller" => "Error", "action" => "not_found");
         } else {
             throw new Bull_Web_Exception_NoClassForController("'$name'");
         }

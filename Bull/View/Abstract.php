@@ -43,9 +43,14 @@ abstract class Bull_View_Abstract
         return $this->format_types->getContentType($this->format);
     }
     
-    public function setData(array $data)
+    public function setDatas(array $data)
     {
         $this->data = $data;
+    }
+
+    public function setData($name, $value)
+    {
+        $this->data[$name] = $value;
     }
     
     public function setAccept($accept)

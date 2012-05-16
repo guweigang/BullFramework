@@ -73,12 +73,21 @@ abstract class Bull_Web_Controller
 
     /**
      *
-     * View file
+     * Inflect Object
      *
-     * @var string
+     * @var Bull_Util_Inflect
      *
      */
-    protected $viewfile = "";
+    protected $inflect;
+    
+    /**
+     *
+     * View file
+     *
+     * @var string | null
+     *
+     */
+    protected $viewfile = null;
 
     /**
      *
@@ -102,16 +111,20 @@ abstract class Bull_Web_Controller
      */
     public function __construct($context, array $params = array())
     {
+        $this->inflect  = new Bull_Util_Inflect();
         $this->context  = $context;
         $this->response = new Bull_Web_Response();
         $this->params   = $params;
         $this->data     = new StdClass();
+        
         $this->action   = isset($this->params['action'])
                         ? $this->params['action']
                         : null;
         $this->action   = $this->action === null
                         ? $this->defaction
-                        : $this->action; 
+                        : $this->action;
+        $this->action   = $this->inflect->dashesToUnder(strtolower($this->action));
+        
         $this->format   = isset($this->params['format'])
                         ? $this->params['format']
                         : null;
@@ -269,22 +282,8 @@ abstract class Bull_Web_Controller
     public function preAction()
     {
     }
-    
-    /**
-     * 
-     * Determines the action method, then invokes it.
-     * 
-     * @return void
-     * 
-     */
-    protected function action()
-    {
-        $method = 'action' . ucfirst($this->action);
-        if (! method_exists($this, $method)) {
-            throw new Bull_Web_Exception_NoMethodForAction($this->action);
-        }
-        $this->invokeMethod($method);
-    }
+
+    abstract protected function action();
     
     /**
      * 

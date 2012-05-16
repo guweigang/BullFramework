@@ -88,9 +88,9 @@ class Bull_Web_Front
             $this->router = new Bull_Web_RouteMap();
         }
         $this->context  = $context;
-        $this->factory  = new Bull_Web_ControllerFactory();
+        $this->defaults = $defaults;
+        $this->factory  = new Bull_Web_ControllerFactory($this->defaults['error']);
         $this->response = new Bull_Http_Response();
-        $this->defaults = $defaults;        
     }
     
     /**
@@ -147,7 +147,7 @@ class Bull_Web_Front
                 // use a default controller
                 $controller = $this->defaults['controller'];
             }
-            $params = array_merge($route->values, $this->defaults);
+            $params = array_merge($this->defaults, $route->values);
         } else {
             // no match
             $controller = null;
